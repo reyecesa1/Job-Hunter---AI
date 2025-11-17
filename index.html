@@ -88,6 +88,12 @@
             color: var(--secondary);
         }
 
+        .nav-container {
+            display: flex;
+            align-items: center;
+            gap: 30px;
+        }
+
         .nav-menu {
             display: flex;
             list-style: none;
@@ -128,6 +134,7 @@
         .cta-buttons {
             display: flex;
             align-items: center;
+            gap: 12px;
         }
 
         .btn {
@@ -159,7 +166,6 @@
             background-color: transparent;
             color: var(--light);
             border: 1px solid var(--medium-gray);
-            margin-left: 12px;
         }
 
         .btn-secondary:hover {
@@ -865,7 +871,7 @@
         }
 
         @media (max-width: 768px) {
-            .nav-menu {
+            .nav-container {
                 position: fixed;
                 top: 0;
                 right: -100%;
@@ -878,10 +884,17 @@
                 box-shadow: -5px 0 15px rgba(0, 0, 0, 0.3);
                 padding: 100px 30px 30px;
                 z-index: 999;
+                justify-content: flex-start;
+                gap: 30px;
             }
             
-            .nav-menu.active {
+            .nav-container.active {
                 right: 0;
+            }
+            
+            .nav-menu {
+                flex-direction: column;
+                width: 100%;
             }
             
             .nav-menu li {
@@ -978,6 +991,19 @@
             
             .social-links {
                 justify-content: center;
+            }
+            
+            /* Mobile CTA buttons in nav */
+            .mobile-cta {
+                display: flex;
+                flex-direction: column;
+                gap: 15px;
+                width: 100%;
+            }
+            
+            .mobile-cta .btn {
+                width: 100%;
+                text-align: center;
             }
         }
 
@@ -1091,25 +1117,29 @@
                 TalentSync AI
             </a>
             
+            <div class="nav-container">
+                <ul class="nav-menu">
+                    <li><a href="#features">Features</a></li>
+                    <li><a href="#process">How It Works</a></li>
+                    <li><a href="#enterprise">Enterprise</a></li>
+                    <li><a href="#testimonials">Testimonials</a></li>
+                </ul>
+                
+                <div class="cta-buttons header-cta">
+                    <a href="#" class="btn btn-secondary">Sign In</a>
+                    <a href="#" class="btn btn-primary">Get Started</a>
+                </div>
+                
+                <!-- Mobile CTA buttons (hidden on desktop) -->
+                <div class="mobile-cta">
+                    <a href="#" class="btn btn-secondary">Sign In</a>
+                    <a href="#" class="btn btn-primary">Get Started</a>
+                </div>
+            </div>
+            
             <button class="hamburger">
                 <i class="fas fa-bars"></i>
             </button>
-            
-            <ul class="nav-menu">
-                <li><a href="#features">Features</a></li>
-                <li><a href="#process">How It Works</a></li>
-                <li><a href="#enterprise">Enterprise</a></li>
-                <li><a href="#testimonials">Testimonials</a></li>
-                <li class="header-cta">
-                    <a href="#" class="btn btn-secondary">Sign In</a>
-                    <a href="#" class="btn btn-primary">Get Started</a>
-                </li>
-            </ul>
-            
-            <div class="cta-buttons header-cta">
-                <a href="#" class="btn btn-secondary">Sign In</a>
-                <a href="#" class="btn btn-primary">Get Started</a>
-            </div>
         </div>
     </header>
 
@@ -1386,13 +1416,13 @@
     <script>
         // Mobile Navigation Toggle
         const hamburger = document.querySelector('.hamburger');
-        const navMenu = document.querySelector('.nav-menu');
+        const navContainer = document.querySelector('.nav-container');
         const body = document.body;
 
         hamburger.addEventListener('click', () => {
-            navMenu.classList.toggle('active');
+            navContainer.classList.toggle('active');
             body.classList.toggle('no-scroll');
-            hamburger.innerHTML = navMenu.classList.contains('active') 
+            hamburger.innerHTML = navContainer.classList.contains('active') 
                 ? '<i class="fas fa-times"></i>' 
                 : '<i class="fas fa-bars"></i>';
         });
@@ -1401,7 +1431,7 @@
         const navLinks = document.querySelectorAll('.nav-menu a');
         navLinks.forEach(link => {
             link.addEventListener('click', () => {
-                navMenu.classList.remove('active');
+                navContainer.classList.remove('active');
                 body.classList.remove('no-scroll');
                 hamburger.innerHTML = '<i class="fas fa-bars"></i>';
             });
